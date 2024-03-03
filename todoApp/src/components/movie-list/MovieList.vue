@@ -1,8 +1,6 @@
 <template>
   <ul class="movie-list list-group">
-    <movie-list-item />
-    <movie-list-item />
-    <movie-list-item />
+    <MovieListItem v-for="(movie, idx) in movies" :movie="movie" :key="idx" />
   </ul>
 </template>
 
@@ -11,6 +9,12 @@ import MovieListItem from "../movie-list-item/MovieListItem.vue";
 export default {
   components: {
     MovieListItem,
+  },
+  props: {
+    movies: {
+      type: Array,
+      required: true,
+    },
   },
 };
 </script>
