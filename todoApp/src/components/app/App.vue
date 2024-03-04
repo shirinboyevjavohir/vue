@@ -10,7 +10,7 @@
         <AppFilter />
       </div>
       <MovieList :movies="movies" />
-      <MovieAddForm />
+      <MovieAddForm @CREATE="addMovie" />
     </div>
   </div>
 </template>
@@ -37,6 +37,11 @@ export default {
         { name: "Empire of osman", viewers: 733, favourite: false, like: true },
       ],
     };
+  },
+  methods: {
+    addMovie(movie) {
+      this.movies.push(movie);
+    },
   },
 };
 </script>

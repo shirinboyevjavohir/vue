@@ -6,19 +6,48 @@
         type="text"
         class="form-control new-movie-label"
         placeholder="Qanday kino?"
+        :value="name"
+        @input="name = $event.target.value"
       />
       <input
-        type="text"
+        type="number"
         class="form-control new-movie-label"
         placeholder="Necha marotaba ko'rilgan"
+        :value="viewers"
+        @input="viewers = $event.target.value"
       />
-      <button class="btn btn-outline-dark" type="submit">Qo'shish</button>
+      <button @click="addForm" class="btn btn-outline-dark" type="submit">
+        Qo'shish
+      </button>
     </form>
   </div>
 </template>
 
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      name: "",
+      viewers: "",
+    };
+  },
+  methods: {
+    addForm(e) {
+      e.preventDefault();
+      const newMovieItem = {
+        name: this.name,
+        viewers: this.viewers,
+        favourite: false,
+        like: false,
+      };
+
+      this.$emit("CREATE", newMovieItem);
+
+      this.name = "";
+      this.viewers = "";
+    },
+  },
+};
 </script>
 
 <style scoped>
