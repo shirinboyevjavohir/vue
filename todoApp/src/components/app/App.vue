@@ -32,9 +32,21 @@ export default {
   data() {
     return {
       movies: [
-        { name: "Avatar Ang", viewers: 234, favourite: false, like: true },
-        { name: "Omar", viewers: 867, favourite: true, like: false },
-        { name: "Empire of osman", viewers: 733, favourite: false, like: true },
+        {
+          id: 1,
+          name: "Avatar Ang",
+          viewers: 234,
+          favourite: false,
+          like: true,
+        },
+        { id: 2, name: "Omar", viewers: 867, favourite: true, like: false },
+        {
+          id: 3,
+          name: "Empire of osman",
+          viewers: 733,
+          favourite: false,
+          like: true,
+        },
       ],
     };
   },
@@ -58,7 +70,6 @@ export default {
   background: #fff;
   padding: 5rem 0;
   margin: 0 auto;
-  border: 1px solid red;
 }
 
 .search-panel {

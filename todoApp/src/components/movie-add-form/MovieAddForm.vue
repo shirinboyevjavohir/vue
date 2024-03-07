@@ -35,6 +35,7 @@ export default {
     addForm(e) {
       e.preventDefault();
       const newMovieItem = {
+        id: Date.now(),
         name: this.name,
         viewers: this.viewers,
         favourite: false,
