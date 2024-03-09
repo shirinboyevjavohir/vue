@@ -34,6 +34,7 @@ export default {
   methods: {
     addForm(e) {
       e.preventDefault();
+      if (!this.name || !this.viewers) return;
       const newMovieItem = {
         id: Date.now(),
         name: this.name,

@@ -3,18 +3,30 @@
     class="list-group-item d-flex justify-content-between"
     :class="[{ like: movie.like }, { favourite: movie.favourite }]"
   >
-    <span class="list-group-item-label">{{ movie.name }}</span>
+    <span
+      @click="$emit('onToggle', { id: this.movie.id, status: 'like' })"
+      class="list-group-item-label"
+      >{{ movie.name }}</span
+    >
     <input
       type="number"
       class="list-group-item-input"
       :defaultValue="`${movie.viewers}`"
     />
     <div class="d-flex justify-content-center align-items-center">
-      <button type="button" class="btn-cookie btn-sm">
+      <button
+        @click="$emit('onToggle', { id: this.movie.id, status: 'favourite' })"
+        type="button"
+        class="btn-cookie btn-sm"
+      >
         <i class="fas fa-cookie"></i>
       </button>
 
-      <button type="button" class="btn-trash btn-sm">
+      <button
+        @click="$emit('onDelete', movie.id)"
+        type="button"
+        class="btn-trash btn-sm"
+      >
         <i class="fas fa-trash"></i>
       </button>
 

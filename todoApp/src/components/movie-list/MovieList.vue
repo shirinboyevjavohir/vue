@@ -1,6 +1,12 @@
 <template>
   <ul class="movie-list list-group">
-    <MovieListItem v-for="movie in movies" :movie="movie" :key="movie.id" />
+    <MovieListItem
+      v-for="movie in movies"
+      :movie="movie"
+      :key="movie.id"
+      @onToggle="$emit('onToggle', $event)"
+      @onDelete="$emit('onDelete', $event)"
+    />
   </ul>
 </template>
 
@@ -14,6 +20,14 @@ export default {
     movies: {
       type: Array,
       required: true,
+    },
+  },
+  methods: {
+    onLike(id) {
+      this.$emit("onLike", id);
+    },
+    onFavourite(id) {
+      this.$emit("onFavourite", id);
     },
   },
 };
