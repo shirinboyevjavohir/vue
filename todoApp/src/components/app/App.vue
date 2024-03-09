@@ -9,7 +9,11 @@
         <SearchPanel />
         <AppFilter />
       </div>
-      <MovieList :movies="movies" />
+      <MovieList
+        :movies="movies"
+        @onToggle="onToggleHandler"
+        @onDelete="onDeleteHandler"
+      />
       <MovieAddForm @CREATE="addMovie" />
     </div>
   </div>
@@ -53,6 +57,20 @@ export default {
   methods: {
     addMovie(movie) {
       this.movies.push(movie);
+    },
+    onToggleHandler({ id, status }) {
+      this.movies = this.movies.map((movie) => {
+        if (movie.id === id) {
+          console.log({ ...movie, [status]: !movie[status] });
+
+          return { ...movie, [status]: !movie[status] };
+        }
+        return movie;
+      });
+    },
+
+    onDeleteHandler(id) {
+      this.movies = this.movies.filter((movie) => movie.id != id);
     },
   },
 };
