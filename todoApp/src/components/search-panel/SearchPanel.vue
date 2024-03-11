@@ -3,11 +3,31 @@
     type="text"
     class="form-control search-input"
     placeholder="Kinolarni qidirish"
+    :value="term"
+    @input="changeTermHandler"
   />
 </template>
 
 <script>
-export default {};
+export default {
+  props: {
+    changeTermHandler: {
+      type: Function,
+      required: true,
+    },
+  },
+  data() {
+    return {
+      term: "",
+    };
+  },
+  methods: {
+    changeTermHandler(e) {
+      this.term = e.target.value;
+      this.changeTermHandler(this.term);
+    },
+  },
+};
 </script>
 
 <style scoped>
