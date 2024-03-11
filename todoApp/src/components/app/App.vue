@@ -2,15 +2,15 @@
   <div class="app">
     <div class="content">
       <AppInfo
-        :favouriteMoviesCount="movies.filter((c) => c.favourite).length"
         :allMoviesCount="movies.length"
+        :favouriteMoviesCount="viewersCount()"
       />
       <div class="search-panel">
-        <SearchPanel />
+        <SearchPanel :changeTermHandler="changeTermHandler" />
         <AppFilter />
       </div>
       <MovieList
-        :movies="movies"
+        :movies="searchMovie(movies, term)"
         @onToggle="onToggleHandler"
         @onDelete="onDeleteHandler"
       />
@@ -52,6 +52,7 @@ export default {
           like: true,
         },
       ],
+      term: "",
     };
   },
   methods: {
@@ -71,6 +72,24 @@ export default {
 
     onDeleteHandler(id) {
       this.movies = this.movies.filter((movie) => movie.id != id);
+    },
+
+    searchMovie(movies, term) {
+      if (term.length == 0) {
+        return movies;
+      }
+
+      return movies.filter(
+        (movie) => movie.name.toLowerCase().indexOf(term) > -1
+      );
+    },
+
+    changeTermHandler(term) {
+      this.term = term;
+    },
+
+    viewersCount() {
+      return this.movies.filter((movie) => movie.favourite).length;
     },
   },
 };
