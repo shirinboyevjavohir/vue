@@ -7,10 +7,13 @@
       />
       <div class="search-panel">
         <SearchPanel :changeTermHandler="changeTermHandler" />
-        <AppFilter />
+        <AppFilter
+          :updateFilterHandler="updateFilterHandler"
+          :filterName="filter"
+        />
       </div>
       <MovieList
-        :movies="searchMovie(movies, term)"
+        :movies="onFilterHandler(searchMovie(movies, term), filter)"
         @onToggle="onToggleHandler"
         @onDelete="onDeleteHandler"
       />
@@ -53,6 +56,7 @@ export default {
         },
       ],
       term: "",
+      filter: "popular",
     };
   },
   methods: {
@@ -90,6 +94,21 @@ export default {
 
     viewersCount() {
       return this.movies.filter((movie) => movie.favourite).length;
+    },
+
+    onFilterHandler(movies, filter) {
+      switch (filter) {
+        case "popular":
+          return movies.filter((movie) => movie.like);
+        case "mostViewers":
+          return movies.filter((movie) => movie.viewers > 500);
+        default:
+          return movies;
+      }
+    },
+
+    updateFilterHandler(filter) {
+      this.filter = filter;
     },
   },
 };
