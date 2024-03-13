@@ -56,7 +56,7 @@ export default {
         },
       ],
       term: "",
-      filter: "popular",
+      filter: "all",
     };
   },
   methods: {
