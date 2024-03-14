@@ -1,26 +1,28 @@
 <template>
-  <div class="movie-add-form">
+  <Box>
     <h3>Yangi kino qo'shish</h3>
     <form action="" class="add-form d-flex">
-      <input
+      <Input
         type="text"
-        class="form-control new-movie-label"
+        class="new-movie-label"
         placeholder="Qanday kino?"
-        :value="name"
-        @input="name = $event.target.value"
+        v-model="name"
       />
-      <input
+      <Input
         type="number"
-        class="form-control new-movie-label"
-        placeholder="Necha marotaba ko'rilgan"
-        :value="viewers"
-        @input="viewers = $event.target.value"
+        class="new-movie-label"
+        placeholder="Necha marotaba ko'rilgan?"
+        v-model="viewers"
       />
-      <button @click="addForm" class="btn btn-outline-dark" type="submit">
+      <GenericButton
+        @click="addForm"
+        class="btn btn-outline-dark"
+        type="submit"
+      >
         Qo'shish
-      </button>
+      </GenericButton>
     </form>
-  </div>
+  </Box>
 </template>
 
 <script>
@@ -52,12 +54,4 @@ export default {
 };
 </script>
 
-<style scoped>
-.movie-add-form {
-  margin-top: 2rem;
-  padding: 1.5rem;
-  background-color: #fcfaf5;
-  border-radius: 4px;
-  box-shadow: 15px 15px 15px rgba(0, 0, 0, 0.15);
-}
-</style>
+<style scoped></style>

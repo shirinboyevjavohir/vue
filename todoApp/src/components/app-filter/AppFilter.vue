@@ -1,6 +1,6 @@
 <template>
   <div class="btn-group">
-    <button
+    <GenericButton
       v-for="btn in filterButton"
       :key="btn.filterType"
       class="btn"
@@ -8,7 +8,7 @@
       @click="filterHandler(btn.filterType)"
     >
       {{ btn.title }}
-    </button>
+    </GenericButton>
   </div>
 </template>
 
