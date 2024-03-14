@@ -5,13 +5,13 @@
         :allMoviesCount="movies.length"
         :favouriteMoviesCount="viewersCount()"
       />
-      <div class="search-panel">
+      <Box>
         <SearchPanel :changeTermHandler="changeTermHandler" />
         <AppFilter
           :updateFilterHandler="updateFilterHandler"
           :filterName="filter"
         />
-      </div>
+      </Box>
       <MovieList
         :movies="onFilterHandler(searchMovie(movies, term), filter)"
         @onToggle="onToggleHandler"
