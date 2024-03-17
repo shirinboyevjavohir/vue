@@ -12,11 +12,32 @@
           :filterName="filter"
         />
       </Box>
+      <Box v-if="!movies.length && !isLoading">
+        <p class="text-center fs-3 text-danger">Kinolar yo'q!</p>
+      </Box>
+      <Box v-else-if="isLoading" class="loader-container">
+        <Loader />
+      </Box>
       <MovieList
+        v-else
         :movies="onFilterHandler(searchMovie(movies, term), filter)"
         @onToggle="onToggleHandler"
         @onDelete="onDeleteHandler"
       />
+      <Box class="pagination-container">
+        <nav aria-label="pagination">
+          <ul class="pagination pagination-lg">
+            <li
+              v-for="pageNumber in totalPages"
+              :key="pageNumber"
+              :class="{ active: pageNumber === page }"
+              @click="changePageNumHandler(pageNumber)"
+            >
+              <span class="page-link">{{ pageNumber }}</span>
+            </li>
+          </ul>
+        </nav>
+      </Box>
       <MovieAddForm @CREATE="addMovie" />
     </div>
   </div>
@@ -42,6 +63,10 @@ export default {
       movies: [],
       term: "",
       filter: "all",
+      isLoading: false,
+      limit: 10,
+      page: 1,
+      totalPages: 0,
     };
   },
   mounted() {
@@ -101,22 +126,41 @@ export default {
 
     async fatchMovies() {
       try {
-        const { data } = await axios.get(
-          "https://jsonplaceholder.typicode.com/posts?_limit=10"
+        this.isLoading = true;
+        const response = await axios.get(
+          "https://jsonplaceholder.typicode.com/posts",
+          {
+            params: {
+              _limit: this.limit,
+              _page: this.page,
+            },
+          }
         );
 
-        const newData = data.map((item) => ({
+        this.totalPages = Math.ceil(
+          response.headers["x-total-count"] / this.limit
+        );
+        const newData = response.data.map((item) => ({
           id: item.id,
           name: item.title,
           like: false,
           favourite: false,
           viewers: item.id * 10,
         }));
-
         this.movies = newData;
       } catch (error) {
         console.log(error.message);
+      } finally {
+        this.isLoading = false;
       }
+    },
+    changePageNumHandler(pageNumber) {
+      this.page = pageNumber;
+    },
+  },
+  watch: {
+    page() {
+      this.fatchMovies();
     },
   },
 };
@@ -142,5 +186,11 @@ export default {
   background-color: #fcfaf5;
   border-radius: 4px;
   box-shadow: 15px 15px 15px rgba(0, 0, 0, 0.15);
+}
+
+.loader-container,
+.pagination-container {
+  display: grid;
+  place-items: center;
 }
 </style>
