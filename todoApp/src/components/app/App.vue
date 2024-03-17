@@ -28,6 +28,7 @@ import SearchPanel from "../search-panel/SearchPanel.vue";
 import AppFilter from "../app-filter/AppFilter.vue";
 import MovieList from "../movie-list/MovieList.vue";
 import MovieAddForm from "../movie-add-form/MovieAddForm.vue";
+import axios from "axios";
 export default {
   components: {
     AppInfo,
@@ -38,26 +39,13 @@ export default {
   },
   data() {
     return {
-      movies: [
-        {
-          id: 1,
-          name: "Avatar Ang",
-          viewers: 234,
-          favourite: false,
-          like: true,
-        },
-        { id: 2, name: "Omar", viewers: 867, favourite: true, like: false },
-        {
-          id: 3,
-          name: "Empire of osman",
-          viewers: 733,
-          favourite: false,
-          like: true,
-        },
-      ],
+      movies: [],
       term: "",
       filter: "all",
     };
+  },
+  mounted() {
+    this.fatchMovies();
   },
   methods: {
     addMovie(movie) {
@@ -109,6 +97,26 @@ export default {
 
     updateFilterHandler(filter) {
       this.filter = filter;
+    },
+
+    async fatchMovies() {
+      try {
+        const { data } = await axios.get(
+          "https://jsonplaceholder.typicode.com/posts?_limit=10"
+        );
+
+        const newData = data.map((item) => ({
+          id: item.id,
+          name: item.title,
+          like: false,
+          favourite: false,
+          viewers: item.id * 10,
+        }));
+
+        this.movies = newData;
+      } catch (error) {
+        console.log(error.message);
+      }
     },
   },
 };
