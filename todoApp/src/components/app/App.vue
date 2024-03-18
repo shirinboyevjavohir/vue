@@ -73,8 +73,16 @@ export default {
     this.fatchMovies();
   },
   methods: {
-    addMovie(movie) {
-      this.movies.push(movie);
+    async addMovie(movie) {
+      try {
+        const response = await axios.post(
+          "https://jsonplaceholder.typicode.com/posts",
+          movie
+        );
+        this.movies.push(response.data);
+      } catch (error) {
+        console.log(error);
+      }
     },
     onToggleHandler({ id, status }) {
       this.movies = this.movies.map((movie) => {
@@ -87,8 +95,16 @@ export default {
       });
     },
 
-    onDeleteHandler(id) {
-      this.movies = this.movies.filter((movie) => movie.id != id);
+    async onDeleteHandler(id) {
+      try {
+        const response = await axios.delete(
+          `https://jsonplaceholder.typicode.com/posts/${id}`
+        );
+        console.log(response);
+        this.movies = this.movies.filter((movie) => movie.id != id);
+      } catch (error) {
+        console.log(error);
+      }
     },
 
     searchMovie(movies, term) {
