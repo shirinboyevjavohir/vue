@@ -1,9 +1,14 @@
 <template>
-  <div>Register page</div>
+  <div class="text-center">
+    <Register />
+  </div>
 </template>
 
 <script>
-export default {};
+import { Register } from "@/components";
+export default {
+  components: { Register },
+};
 </script>
 
 <style></style>
