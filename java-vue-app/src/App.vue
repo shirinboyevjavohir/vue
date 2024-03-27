@@ -2,8 +2,8 @@
   <div>
     <div class="container">
       <Navbar />
+      <RouterView />
     </div>
-    <RouterView />
   </div>
 </template>
 
